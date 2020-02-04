@@ -12,7 +12,7 @@
 
                     <div class="card-body">
 
-                        {!! Form::open(['route' => 'tenants.create']) !!}
+                        {!! Form::open(['route' => 'properties.create']) !!}
                         <div class="form-group">
                             {!! Form::label('name', 'Property Name') !!}
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}

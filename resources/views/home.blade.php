@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center" style="margin-bottom: 20px;">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
                    <h4> Total Properties </h4>
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
                     <h4> Total Tenants </h4>
@@ -19,10 +19,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
-                    <h4> Total Tenants </h4>
+                    <h4> Total Vacancy </h4>
+                    <h5> 5 </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4> Total Rented </h4>
                     <h5> 5 </h5>
                 </div>
             </div>

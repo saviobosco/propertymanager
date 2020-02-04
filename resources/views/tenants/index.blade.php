@@ -19,6 +19,7 @@
                                 <th> First Name </th>
                                 <th> Last Name </th>
                                 <th> Phone Number </th>
+                                <th> Lease Start </th>
                                 <th> Lease Ends </th>
                                 <th> Property </th>
                                 <th> Created </th>
@@ -32,6 +33,7 @@
                                     <td> {{ $tenant->first_name }}</td>
                                     <td> {{ $tenant->last_name }}</td>
                                     <td> {{ $tenant->phone_number }}</td>
+                                    <td> {{ $tenant->lease_starts }}</td>
                                     <td> {{ $tenant->lease_ends }}</td>
                                     <td> {{ $tenant->property->name }}</td>
                                     <td> {{ $tenant->created_at }}</td>
