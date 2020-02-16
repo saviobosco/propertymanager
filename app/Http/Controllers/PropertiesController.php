@@ -14,8 +14,9 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        $properties = Property::all();
-
+        $properties = Property::query()
+            ->where('user_id', auth()->user()->id)
+            ->get();
         return view('properties.index')->with(compact('properties'));
     }
 
