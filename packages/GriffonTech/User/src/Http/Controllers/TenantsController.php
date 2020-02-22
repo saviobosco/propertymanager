@@ -75,8 +75,8 @@ class TenantsController extends Controller
                 $units = $this->unitRepository->findWhereIn('property_id', $property_ids)
                     ->pluck('identifier', 'id')->prepend('--Select Unit--', '')->toArray();
             }
+            return view($this->_config['view'])->with(compact('units'));
         }
-        return view($this->_config['view'])->with(compact('units'));
     }
 
 
