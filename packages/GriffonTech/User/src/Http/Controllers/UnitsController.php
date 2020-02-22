@@ -33,10 +33,11 @@ class UnitsController extends Controller
     public function index()
     {
         $units = $this->unitRepository->getModel()
-            ->with(['property', 'tenants:id,first_name,last_name,unit_id'])
-            ->join('properties', 'properties.id', '=', 'units.property_id')
-            ->where('properties.user_id', auth()->user()->id)
-            ->select('units.*', 'properties.id')
+            ->with([
+                'property' => function($query) {
+                    $query->where('user_id', auth()->user()->id);
+                },
+                'tenants:id,first_name,last_name,unit_id'])
             ->get();
 
         return view($this->_config['view'])->with(['units' => $units]);

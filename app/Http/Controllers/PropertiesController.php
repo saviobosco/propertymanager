@@ -39,6 +39,7 @@ class PropertiesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'property_type' => 'required',
             'name' => 'required',
             'address' => 'required'
         ]);
