@@ -38,7 +38,7 @@ class TenantsController extends Controller
     public function index()
     {
         $unit_id = \request()->route('unit_id');
-
+        $tenants = [];
         if ($unit_id) {
             $tenants = $this->tenantRepository
                 ->with(['property', 'unit'])
@@ -57,7 +57,7 @@ class TenantsController extends Controller
             }
         }
         return view($this->_config['view'])
-            ->with(compact('units', 'tenants'));
+            ->with(compact('tenants'));
     }
 
     public function create()
