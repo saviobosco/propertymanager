@@ -18,6 +18,13 @@ class CreatePropertiesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('address', 3000);
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('landlord_name')->nullable();
+            $table->string('landlord_address')->nullable();
+            $table->string('landlord_bank_account_details', 1000)->nullable();
+            $table->string('property_type');
             $table->timestamps();
         });
     }

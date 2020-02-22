@@ -16,7 +16,10 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('property_id');
-            $table->boolean('is_vacant')->default(1);
+            $table->string('identifier')->unique();
+            $table->date('lease_starts')->nullable();
+            $table->date('lease_ends')->nullable();
+            $table->boolean('is_occupied')->nullable()->default(0);
             $table->timestamps();
         });
     }

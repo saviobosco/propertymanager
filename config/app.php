@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Konekt\Concord\ConcordServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -174,7 +175,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        \GriffonTech\Property\Providers\PropertyServiceProvider::class,
+        \GriffonTech\User\Providers\UserServiceProvider::class,
     ],
 
     /*
