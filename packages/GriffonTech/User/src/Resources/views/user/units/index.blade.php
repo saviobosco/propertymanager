@@ -9,7 +9,7 @@
                     <a class="btn btn-primary btn-sm" href="{{ route('user.units.create') }}"> New Unit</a>
                 </div>
                 <div class="panel-body">
-                    <table class="table">
+                    <table class="table table-responsive">
                         <thead>
                         <tr>
                             <td>

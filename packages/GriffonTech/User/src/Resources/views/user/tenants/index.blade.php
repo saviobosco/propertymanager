@@ -13,7 +13,7 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <table class="table">
+                    <table class="table table-responsive">
                         <thead>
                         <tr>
                             <td>
