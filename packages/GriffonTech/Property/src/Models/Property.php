@@ -5,6 +5,7 @@ namespace GriffonTech\Property\Models;
 
 
 use GriffonTech\Unit\Models\UnitProxy;
+use GriffonTech\Tenant\Models\TenantProxy;
 use Illuminate\Database\Eloquent\Model;
 use GriffonTech\Property\Contracts\Property as PropertyContract;
 class Property extends Model implements PropertyContract
@@ -18,5 +19,10 @@ class Property extends Model implements PropertyContract
     public function units()
     {
         return $this->hasMany(UnitProxy::modelClass(), 'property_id', 'id');
+    }
+
+    public function tenants()
+    {
+        return $this->hasMany(TenantProxy::modelClass(), 'property_id', 'id');
     }
 }

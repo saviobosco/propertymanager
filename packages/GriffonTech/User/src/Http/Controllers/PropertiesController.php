@@ -5,7 +5,9 @@ namespace GriffonTech\User\Http\Controllers;
 
 
 use GriffonTech\Property\Repositories\PropertyRepository;
+use GriffonTech\Tenant\Repositories\TenantRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PropertiesController
 {
@@ -22,14 +24,18 @@ class PropertiesController
     ];
 
     protected $propertyRepository;
+    protected $tenantRepository;
 
     public function __construct(
-        PropertyRepository $propertyRepository
+        PropertyRepository $propertyRepository,
+        TenantRepository $tenantRepository
     )
     {
         $this->_config = request('_config');
 
         $this->propertyRepository = $propertyRepository;
+
+        $this->tenantRepository = $tenantRepository;
     }
 
 
@@ -116,6 +122,43 @@ class PropertiesController
         }
         return redirect()
             ->route($this->_config['redirect']);
+    }
+
+    public function getTenants($id)
+    {
+        $searchParam = \request()->query('search_param');
+
+        $tenants = [];
+
+        if ($searchParam === 'less_than_2_months') {
+            $tenants = $this->tenantRepository->getModel()
+                ->join('units', 'tenants.unit_id', '=', 'units.id')
+                ->whereBetween('units.lease_ends',[DB::raw('CURDATE()'),
+                    DB::raw('CURDATE() + INTERVAL 60 DAY')
+                ])
+                ->where('tenants.property_id', $id)
+                ->get()->toArray();
+
+        } else if ($searchParam === 'expired') {
+
+           $tenants = $this->tenantRepository->getModel()
+               ->join('units', 'tenants.unit_id', '=', 'units.id')
+               ->where('tenants.property_id', $id)
+               ->where('units.is_occupied', 1)
+               ->where('tenants.active', 1)
+               ->whereDate('units.lease_ends','<=', DB::raw('CURDATE()'))
+               ->get()->toArray();
+
+        }
+
+        if (\request()->expectsJson()) {
+            return response()
+                ->json([
+                    'render' => view($this->_config['view'])->with(compact('tenants'))->render()
+                ]);
+        }
+        return view($this->_config['view'])
+            ->with(compact('tenants'));
     }
 
 }

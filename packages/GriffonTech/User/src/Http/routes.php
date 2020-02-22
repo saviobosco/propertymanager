@@ -40,6 +40,10 @@ Route::group(['middleware' => ['web']], function(){
                 'redirect' => 'user.properties.index'
             ])->name('user.properties.delete');
 
+            Route::get('properties/get_tenants/{id}', 'GriffonTech\User\Http\Controllers\PropertiesController@getTenants')->defaults('_config', [
+                'view' => 'user::user.properties.tenants'
+            ])->name('user.properties.tenants');
+
 
             /** User Units */
             Route::get('units/index', 'GriffonTech\User\Http\Controllers\UnitsController@index')->defaults('_config', [
@@ -119,6 +123,16 @@ Route::group(['middleware' => ['web']], function(){
             Route::delete('/tenants/delete/{tenant_id}', 'GriffonTech\User\Http\Controllers\TenantsController@destroy')->defaults('_config', [
                 'redirect' => 'user.tenants.index'
             ])->name('user.tenants.delete');
+
+            /** SMS Center */
+
+            Route::get('/sms-center/index', 'GriffonTech\User\Http\Controllers\SMSCenterController@index')->defaults('_config', [
+                'view' => 'user::user.sms-center.index'
+            ])->name('user.sms-center.index');
+
+            Route::get('/sms-center/create', 'GriffonTech\User\Http\Controllers\SMSCenterController@create')->defaults('_config', [
+                'view' => 'user::user.sms-center.create'
+            ])->name('user.sms-center.create');
 
         });
     });

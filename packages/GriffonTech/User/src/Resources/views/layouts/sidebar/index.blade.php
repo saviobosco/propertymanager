@@ -56,6 +56,12 @@
                     <span>Payments</span>
                 </a>
             </li>
+            <li class="">
+                <a href="{{ route('user.sms-center.create')  }}">
+                    <i class="material-icons">list</i>
+                    <span>SMS Center</span>
+                </a>
+            </li>
 
 
 

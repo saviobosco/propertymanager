@@ -107,7 +107,7 @@ class TenantsController extends Controller
             }
             return redirect()->route('user.tenants.create');
         }
-        if ($request->input('id')) {
+        if ($request->route('id')) {
             return redirect()->route($this->_config['redirect'], $newData['unit_id']);
         }
         return redirect()->route($this->_config['redirect']);
