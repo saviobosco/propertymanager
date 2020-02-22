@@ -66,7 +66,9 @@ class TenantsController extends Controller
 
         if ($unit_id) {
             $unit = $this->unitRepository->findOrFail($unit_id);
+            return view($this->_config['view'])->with(compact('unit'));
         } else {
+            $units = [];
             $property_ids = $this->propertyRepository->findByField('user_id', auth()->user()->id)
                 ->pluck('id')->toArray();
             if ($property_ids) {
@@ -74,7 +76,7 @@ class TenantsController extends Controller
                     ->pluck('identifier', 'id')->prepend('--Select Unit--', '')->toArray();
             }
         }
-        return view($this->_config['view'])->with(compact('unit', 'units'));
+        return view($this->_config['view'])->with(compact('units'));
     }
 
 
