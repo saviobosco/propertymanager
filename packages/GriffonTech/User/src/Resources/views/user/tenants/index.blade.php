@@ -43,14 +43,17 @@
                                     <td> {{ $tenant->phone_number }} </td>
                                     <td>
                                         <?php
-                                        $lease_ends_date = (new \Carbon\Carbon())->diffInDays(new \Carbon\Carbon($tenant->lease_ends), false);
-                                        if ($lease_ends_date < 0) {
-                                            echo '<span class="label label-danger">expired</span>';
-                                        } elseif ($lease_ends_date == 0) {
-                                            echo '<span class="label label-info">expires shortly</span>';
-                                        } else {
-                                            echo $lease_ends_date . ' Day(s)';
+                                        if ($tenant->unit->is_occupied) {
+                                            $lease_ends_date = (new \Carbon\Carbon())->diffInDays(new \Carbon\Carbon($tenant->unit->lease_ends), false);
+                                            if ($lease_ends_date < 0) {
+                                                echo '<span class="label label-danger">expired</span>';
+                                            } elseif ($lease_ends_date == 0) {
+                                                echo '<span class="label label-info">expires shortly</span>';
+                                            } else {
+                                                echo $lease_ends_date . ' Day(s)';
+                                            }
                                         }
+
                                         ?>
                                     </td>
                                     <td> {{ $tenant->created_at }} </td>

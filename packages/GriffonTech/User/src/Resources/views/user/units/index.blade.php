@@ -17,6 +17,7 @@
                             </td>
                             <td> Property Name </td>
                             <td> Identifier </td>
+                            <td> Type </td>
                             <td> Is Occupied </td>
                             <td> Lease Ends </td>
                             <td> Status </td>
@@ -31,6 +32,7 @@
                                 <td> {{ $unit->id }} </td>
                                 <td> {{ $unit->property->name }} </td>
                                 <td> {{ $unit->identifier }} </td>
+                                <td> {{ ($unit->property_unit_type) ? $unit->property_unit_type->unit_type->type : '' }} </td>
                                 <td> {!! ($unit->is_occupied) ? '<span class="text-success">YES</span>' : '<span class="text-danger">NO</span>' !!} </td>
                                 <td> {{ ($unit->lease_ends) ? (new \Carbon\Carbon($unit->lease_ends))->format('M j, Y') : '' }} </td>
                                 <td>

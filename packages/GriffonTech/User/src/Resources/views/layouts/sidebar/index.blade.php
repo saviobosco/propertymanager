@@ -26,6 +26,19 @@
         <!-- end sidebar user -->
         <!-- begin sidebar nav -->
         <ul class="nav"><li class="nav-header">Navigation</li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret"></b>
+                    <i class="fa fa-laptop"></i>
+                    <span>Administration</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ route('unit_types.index') }}">Unit Types</a></li>
+                    <li><a href="{{ route('amenities.index') }}">Amenities</a></li>
+
+                </ul>
+            </li>
+
             <li class="">
                 <a href="{{ route('user.dashboard.index')  }}">
                     <i class="material-icons">dashboard</i>

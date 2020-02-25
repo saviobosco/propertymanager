@@ -40,6 +40,7 @@
                                 <td> {{ $property->created_at }} </td>
                                 <td> {{ $property->updated_at }} </td>
                                 <td class="with-btn" nowrap>
+                                    <a class="btn btn-info btn-sm m-r-2" href="{{ route('user.property_unit_types.index', $property->id) }}">unit types </a>
                                     <a class="btn btn-info btn-sm width-60 m-r-2" href="{{ route('user.properties.show', $property->id) }}">view</a>
                                     <a class="btn btn-primary btn-sm" href="{{ route('user.properties.edit', $property->id) }}"> edit </a>
                                     <a class="btn btn-danger btn-sm" href="javascript:;"

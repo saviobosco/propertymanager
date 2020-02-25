@@ -60,12 +60,17 @@ class DashboardController extends Controller
             ->getModel()
             ->with(['property'])
             ->whereIn('property_id', $property_ids)
-            ->whereBetween('lease_ends',
+            ->where('is_occupied', 1)
+            ->whereDate('lease_ends', '<', DB::raw('CURDATE()'))
+            /*->whereBetween('lease_ends',
                 [DB::raw('CURDATE()'),
                     DB::raw('CURDATE() + INTERVAL 60 DAY')
-                ])
+                ])*/
+            //->orderBy('property_id')
             ->get()
             ->groupBy('property.name');
+
+        //dd($unitsToExpireSoon);
 
         return view($this->_config['view'])
             ->with(compact('unitsCount',

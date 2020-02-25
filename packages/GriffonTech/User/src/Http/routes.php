@@ -45,6 +45,12 @@ Route::group(['middleware' => ['web']], function(){
             ])->name('user.properties.tenants');
 
 
+            Route::get('/properties/get_property_unit_types/{id}', 'GriffonTech\User\Http\Controllers\PropertiesController@get_property_unit_types')->defaults('_config', [
+                'view' => 'user::user.properties.property_unit_types'
+            ])->name('user.properties.get_property_unit_types');
+
+
+
             /** User Units */
             Route::get('units/index', 'GriffonTech\User\Http\Controllers\UnitsController@index')->defaults('_config', [
                 'view' => 'user::user.units.index'
@@ -134,6 +140,96 @@ Route::group(['middleware' => ['web']], function(){
                 'view' => 'user::user.sms-center.create'
             ])->name('user.sms-center.create');
 
+
+            /**
+             * Amenities
+             */
+            Route::get('/amenities/index', 'GriffonTech\User\Http\Controllers\AmenitiesController@index')->defaults('_config', [
+                'view' => 'user::amenities.index'
+            ])->name('amenities.index');
+
+            Route::get('/amenities/create', 'GriffonTech\User\Http\Controllers\AmenitiesController@create')->defaults('_config', [
+                'view' => 'user::amenities.create'
+            ])->name('amenities.create');
+
+            Route::post('/amenities/create', 'GriffonTech\User\Http\Controllers\AmenitiesController@store')->defaults('_config', [
+                'redirect' => 'amenities.index'
+            ])->name('amenities.store');
+
+            Route::get('/amenities/edit/{id}', 'GriffonTech\User\Http\Controllers\AmenitiesController@edit')->defaults('_config', [
+                'view' => 'user::amenities.edit'
+            ])->name('amenities.edit');
+
+            Route::post('/amenities/edit/{id}', 'GriffonTech\User\Http\Controllers\AmenitiesController@update')->defaults('_config', [
+                'redirect' => 'amenities.index'
+            ])->name('amenities.edit');
+
+            Route::delete('/amenities/delete/{id}', 'GriffonTech\User\Http\Controllers\AmenitiesController@destroy')->defaults('_config', [
+                'redirect' => 'amenities.index'
+            ])->name('amenities.delete');
+
+
+            /** Unit Types */
+            Route::get('/unit-types/index', 'GriffonTech\User\Http\Controllers\UnitTypesController@index')->defaults('_config', [
+                'view' => 'user::unit_types.index'
+            ])->name('unit_types.index');
+
+            Route::get('/unit-types/create', 'GriffonTech\User\Http\Controllers\UnitTypesController@create')->defaults('_config', [
+                'view' => 'user::unit_types.create'
+            ])->name('unit_types.create');
+
+            Route::post('/unit-types/create', 'GriffonTech\User\Http\Controllers\UnitTypesController@store')->defaults('_config', [
+                'redirect' => 'unit_types.index'
+            ])->name('unit_types.create');
+
+            Route::get('/unit-types/edit/{id}', 'GriffonTech\User\Http\Controllers\UnitTypesController@edit')->defaults('_config', [
+                'view' => 'user::unit_types.edit'
+            ])->name('unit_types.edit');
+
+
+            Route::post('/unit-types/edit/{id}', 'GriffonTech\User\Http\Controllers\UnitTypesController@update')->defaults('_config', [
+                'redirect' => 'unit_types.index'
+            ])->name('unit_types.edit');
+
+
+            Route::delete('/unit-types/delete/{id}', 'GriffonTech\User\Http\Controllers\UnitTypesController@destroy')->defaults('_config', [
+                'redirect' => 'unit_types.index'
+            ])->name('unit_types.delete');
+
+
+            /**
+             * Property Unit Type
+             */
+            Route::get('/properties/{property_id}/property-unit-types/index', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@index')->defaults('_config', [
+                'view' => 'user::user.property_unit_types.index'
+            ])->name('user.property_unit_types.index');
+
+
+            Route::get('/properties/{property_id}/property-unit-types/create', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@create')->defaults('_config', [
+                'view' => 'user::user.property_unit_types.create'
+            ])->name('user.property_unit_types.create');
+
+
+            Route::post('/properties/{property_id}/property-unit-types/create', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@store')->defaults('_config', [
+                'redirect' => 'user.property_unit_types.index'
+            ])->name('user.property_unit_types.create');
+
+            Route::get('/property-unit-types/show/{id}', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@show')->defaults('_config', [
+                'view' => 'user::user.property_unit_types.show'
+            ])->name('user.property_unit_types.show');
+
+            Route::get('/property-unit-types/edit/{id}', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@edit')->defaults('_config', [
+                'view' => 'user::user.property_unit_types.edit'
+            ])->name('user.property_unit_types.edit');
+
+
+            Route::post('/property-unit-types/edit/{id}', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@update')->defaults('_config', [
+                'redirect' => 'user.property_unit_types.index'
+            ])->name('user.property_unit_types.edit');
+
+            Route::delete('/property-unit-types/delete/{id}', 'GriffonTech\User\Http\Controllers\PropertyUnitTypesController@destroy')->defaults('_config', [
+                'redirect' => 'user.property_unit_types.index'
+            ])->name('user.property_unit_types.delete');
         });
     });
 });

@@ -6,6 +6,7 @@ namespace GriffonTech\User\Http\Controllers;
 
 use Carbon\Carbon;
 use GriffonTech\Property\Repositories\PropertyRepository;
+use GriffonTech\Property\Repositories\PropertyUnitTypeRepository;
 use GriffonTech\Unit\Repositories\UnitRepository;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,12 @@ class UnitsController extends Controller
 
     protected $propertyRepository;
 
+    protected $propertyUnitTypeRepository;
+
     public function __construct(
         UnitRepository $unitRepository,
-        PropertyRepository $propertyRepository
+        PropertyRepository $propertyRepository,
+        PropertyUnitTypeRepository $propertyUnitTypeRepository
     )
     {
         $this->_config = request('_config');
@@ -28,6 +32,9 @@ class UnitsController extends Controller
         $this->unitRepository = $unitRepository;
 
         $this->propertyRepository = $propertyRepository;
+
+        $this->propertyUnitTypeRepository = $propertyUnitTypeRepository;
+
     }
 
     public function index()
@@ -37,7 +44,9 @@ class UnitsController extends Controller
                 'property' => function($query) {
                     $query->where('user_id', auth()->user()->id);
                 },
-                'tenants:id,first_name,last_name,unit_id'])
+                'tenants:id,first_name,last_name,unit_id',
+                'property_unit_type.unit_type'
+                ])
             ->get();
 
         return view($this->_config['view'])->with(['units' => $units]);
@@ -45,7 +54,8 @@ class UnitsController extends Controller
 
     public function create()
     {
-        $propertySelectValues = $this->propertyRepository->pluck('name' , 'id');
+        $propertySelectValues = $this->propertyRepository
+            ->pluck('name' , 'id')->prepend('--Select Property --', '');
 
         return view($this->_config['view'])->with(compact('propertySelectValues'));
     }
@@ -72,7 +82,15 @@ class UnitsController extends Controller
             ->with(['property'])
             ->findOrFail($id);
 
-        return view($this->_config['view'])->with(compact('unit'));
+        $propertyUnitTypes = $this->propertyUnitTypeRepository->with(['unit_type'])
+            ->findWhere(['property_id' => $unit->property_id])
+            ->map(function($row){
+                $row->type = $row->unit_type->type . ' : ' . $row->amount;
+                return $row;
+            })
+            ->pluck('type', 'id');
+
+        return view($this->_config['view'])->with(compact('unit', 'propertyUnitTypes'));
     }
 
 

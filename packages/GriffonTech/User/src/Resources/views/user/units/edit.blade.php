@@ -21,6 +21,11 @@
                     </div>
 
                     <div class="form-group">
+                        {!! Form::label('property_unit_type_id', 'Property Unit Types') !!}
+                        {!! Form::select('property_unit_type_id',$propertyUnitTypes , null, ['class' => 'form-control', 'id' => 'property_unit_type_id']) !!}
+                    </div>
+
+                    <div class="form-group">
                         {!! Form::label('identifier', 'Identifier') !!}
                         {!! Form::text('identifier', null, ['class' => 'form-control']) !!}
                     </div>

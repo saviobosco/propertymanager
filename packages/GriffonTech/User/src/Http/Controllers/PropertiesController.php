@@ -5,6 +5,7 @@ namespace GriffonTech\User\Http\Controllers;
 
 
 use GriffonTech\Property\Repositories\PropertyRepository;
+use GriffonTech\Property\Repositories\PropertyUnitTypeRepository;
 use GriffonTech\Tenant\Repositories\TenantRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,10 +26,14 @@ class PropertiesController
 
     protected $propertyRepository;
     protected $tenantRepository;
+    protected $propertyUnitTypeRepository;
+
 
     public function __construct(
         PropertyRepository $propertyRepository,
-        TenantRepository $tenantRepository
+        TenantRepository $tenantRepository,
+        PropertyUnitTypeRepository $propertyUnitTypeRepository
+
     )
     {
         $this->_config = request('_config');
@@ -36,6 +41,8 @@ class PropertiesController
         $this->propertyRepository = $propertyRepository;
 
         $this->tenantRepository = $tenantRepository;
+
+        $this->propertyUnitTypeRepository = $propertyUnitTypeRepository;
     }
 
 
@@ -161,4 +168,17 @@ class PropertiesController
             ->with(compact('tenants'));
     }
 
+    public function get_property_unit_types($id)
+    {
+        $propertyUnitTypes = $this->propertyUnitTypeRepository->with(['unit_type'])
+            ->findWhere(['property_id' => $id])
+            ->map(function($row){
+                $row->type = $row->unit_type->type . ' : ' . $row->amount;
+                return $row;
+            })
+            ->pluck('type', 'id');
+
+        return view($this->_config['view'])
+            ->with(compact('propertyUnitTypes'));
+    }
 }

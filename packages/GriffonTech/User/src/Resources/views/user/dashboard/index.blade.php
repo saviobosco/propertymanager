@@ -70,7 +70,7 @@
             <!-- begin panel -->
             <div class="panel panel-inverse" data-sortable-id="index-1">
                 <div class="panel-heading">
-                    <h4 class="panel-title"> Units Less than 2 months to Expiration</h4>
+                    <h4 class="panel-title"> Expired Unit</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>

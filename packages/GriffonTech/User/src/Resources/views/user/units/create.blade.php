@@ -15,7 +15,12 @@
 
                     <div class="form-group">
                         {!! Form::label('property_id', 'Property') !!}
-                        {!! Form::select('property_id', $propertySelectValues , null, ['class' => 'form-control']) !!}
+                        {!! Form::select('property_id', $propertySelectValues , null, ['class' => 'form-control', 'id' => 'property_id']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('property_unit_type_id', 'Property Unit Types') !!}
+                        {!! Form::select('property_unit_type_id', [] , null, ['class' => 'form-control', 'id' => 'property_unit_type_id']) !!}
                     </div>
 
                     <div class="form-group">
@@ -83,6 +88,13 @@
         $('.datepicker-default').datepicker({
             todayHighlight: true,
             format: "yyyy-mm-dd"
+        });
+
+        $('#property_id').change(function(event) {
+            var property_id = event.target.value;
+            if (property_id) {
+                $('#property_unit_type_id').load(document.location.origin + "/user/properties/get_property_unit_types/"+property_id);
+            }
         });
     </script>
 @stop
