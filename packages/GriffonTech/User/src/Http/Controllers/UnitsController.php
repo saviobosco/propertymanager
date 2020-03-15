@@ -113,7 +113,7 @@ class UnitsController extends Controller
     public function show($id)
     {
         $unit = $this->unitRepository
-            ->with(['tenants'])
+            ->with(['tenants', 'rent_payments'])
             ->find($id);
 
         if (\request()->expectsJson()) {

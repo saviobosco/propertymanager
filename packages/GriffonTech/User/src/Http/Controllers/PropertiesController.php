@@ -15,14 +15,7 @@ class PropertiesController
 
     protected $_config;
 
-    protected $PropertyTypes = [
-        '' => '--Select Property Type',
-        'self_con' => 'Self Contain',
-        '2_bed_room' => '2 bed Room Apartment',
-        '3_bed_room' => '3 bed Room Apartment',
-        'lock_up_store' => 'Lock Up Stores',
-        'warehouse' => 'WareHouse',
-    ];
+    protected $PropertyTypes = PropertyRepository::PROPERTY_TYPES;
 
     protected $propertyRepository;
     protected $tenantRepository;

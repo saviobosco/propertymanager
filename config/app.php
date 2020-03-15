@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         \GriffonTech\Property\Providers\PropertyServiceProvider::class,
         \GriffonTech\User\Providers\UserServiceProvider::class,
+        \GriffonTech\Core\Providers\CoreServiceProvider::class
     ],
 
     /*

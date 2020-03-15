@@ -15,6 +15,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/how_it_works', function() {
+   return view('front_end/how_it_works');
+})->name('how_it_works');
+
+Route::get('/about_us', function() {
+    return view('front_end/about_us');
+})->name('about_us');
+
+Route::get('/contact_us', function() {
+    return view('front_end/contact_us');
+})->name('contact_us');
+
+Route::get('/blog', function() {
+    return view('front_end/blog');
+})->name('blog');
+
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function() {

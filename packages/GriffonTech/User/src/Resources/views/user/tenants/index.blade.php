@@ -24,7 +24,7 @@
                             <td> First Name </td>
                             <td> Last Name </td>
                             <td> Phone Number </td>
-                            <td> Lease Duration</td>
+                            <td> Active </td>
                             <td> Created </td>
                             <td> last Updated</td>
                             <td> Actions</td>
@@ -41,21 +41,7 @@
                                     <td> {{ $tenant->first_name }} </td>
                                     <td> {{ $tenant->last_name }} </td>
                                     <td> {{ $tenant->phone_number }} </td>
-                                    <td>
-                                        <?php
-                                        if ($tenant->unit->is_occupied) {
-                                            $lease_ends_date = (new \Carbon\Carbon())->diffInDays(new \Carbon\Carbon($tenant->unit->lease_ends), false);
-                                            if ($lease_ends_date < 0) {
-                                                echo '<span class="label label-danger">expired</span>';
-                                            } elseif ($lease_ends_date == 0) {
-                                                echo '<span class="label label-info">expires shortly</span>';
-                                            } else {
-                                                echo $lease_ends_date . ' Day(s)';
-                                            }
-                                        }
-
-                                        ?>
-                                    </td>
+                                    <td> {{ ($tenant->active) ? 'Yes' : 'No' }} </td>
                                     <td> {{ $tenant->created_at }} </td>
                                     <td> {{ $tenant->updated_at }} </td>
                                     <td class="with-btn" nowrap>

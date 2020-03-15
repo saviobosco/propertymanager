@@ -34,7 +34,6 @@ class SMSGateWay
         $queryParameters = [
             'email' => $this->username,
             'password' => $this->password,
-            'username' => $this->username,
             'sender_name' => $this->sender,
             'message' => $message,
             'recipients' => $phone_number,
@@ -51,7 +50,7 @@ class SMSGateWay
     {
         $client = new Client();
         try {
-            $this->response = $client->request('POST', $this->host, [
+            $this->response = $client->request('POST', $this->host.'/v2/app/sms', [
                 'json' => $this->request,
                 'verify' => false,
                 'headers' => [
@@ -61,6 +60,7 @@ class SMSGateWay
             ]);
             return $this->response->getBody()->read($this->response->getBody()->getSize());
         } catch ( \Exception $exception) {
+            dd($exception->getMessage());
             return false;
         }
     }

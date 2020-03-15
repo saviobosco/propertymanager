@@ -10,6 +10,7 @@ return [
          */
         \GriffonTech\Property\Providers\PropertyModuleServiceProvider::class,
         \GriffonTech\Unit\Providers\UnitModuleServiceProvider::class,
-        \GriffonTech\Tenant\Providers\TenantModuleServiceProvider::class
+        \GriffonTech\Tenant\Providers\TenantModuleServiceProvider::class,
+        \GriffonTech\Core\Providers\CoreModuleServiceProvider::class,
     ]
 ];

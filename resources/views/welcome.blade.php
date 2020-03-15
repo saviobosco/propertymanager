@@ -81,14 +81,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Property Manager
+                    Rental Manager
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">How it works</a>
-                    <a href="https://laracasts.com">About Us</a>
-                    <a href="https://laravel-news.com">Contact Us</a>
-                    <a href="https://blog.laravel.com">Blog</a>
+                    <a href="{{ route('how_it_works') }}">How it works</a>
+                    <a href="{{ route('about_us') }}">About Us</a>
+                    <a href="{{ route('contact_us') }}">Contact Us</a>
+                    <a href="{{ route('blog') }}">Blog</a>
                 </div>
             </div>
         </div>

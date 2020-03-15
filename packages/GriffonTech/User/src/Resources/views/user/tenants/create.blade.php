@@ -103,20 +103,6 @@
                         </div>
                     </div>
 
-                    <div class="row m-b-20">
-                        <div class="col-sm-6">
-                            {!! Form::label('lease_starts', 'Lease Starts') !!}
-                            {!! Form::text('lease_starts', @$unit->lease_starts, [ 'readonly' => true,'id' => 'lease_starts', 'class' => 'form-control']) !!}
-
-                        </div>
-                        <div class="col-sm-6">
-                            {!! Form::label('lease_ends', 'Lease Ends') !!}
-                            {!! Form::text('lease_ends', @$unit->lease_ends, [ 'readonly' => true, 'id' => 'lease_ends', 'class' => 'form-control']) !!}
-
-                        </div>
-                    </div>
-
-
                     <div class="form-group">
                         {!! Form::label('note', 'Note About Tenant') !!}
                         {!! Form::textarea('note', null, ['class' => 'form-control']) !!}

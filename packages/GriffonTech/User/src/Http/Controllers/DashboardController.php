@@ -6,6 +6,7 @@ namespace GriffonTech\User\Http\Controllers;
 
 use GriffonTech\Property\Repositories\PropertyRepository;
 use GriffonTech\Tenant\Repositories\TenantRepository;
+use GriffonTech\Unit\Repositories\UnitRentPaymentRepository;
 use GriffonTech\Unit\Repositories\UnitRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -19,10 +20,13 @@ class DashboardController extends Controller
 
     protected $tenantRepository;
 
+    protected $unitRentPaymentRepository;
+
     public function __construct(
         PropertyRepository $propertyRepository,
         UnitRepository $unitRepository,
-        TenantRepository $tenantRepository
+        TenantRepository $tenantRepository,
+        UnitRentPaymentRepository $unitRentPaymentRepository
     )
     {
         $this->_config = request('_config');
@@ -32,6 +36,8 @@ class DashboardController extends Controller
         $this->unitRepository = $unitRepository;
 
         $this->tenantRepository = $tenantRepository;
+
+        $this->unitRentPaymentRepository = $unitRentPaymentRepository;
     }
 
     public function index()
@@ -56,6 +62,8 @@ class DashboardController extends Controller
             ->findWhereIn('unit_id', $unit_ids)
             ->count();
 
+        $totalIncome = $this->unitRentPaymentRepository->sum('amount');
+
         $unitsToExpireSoon = $this->unitRepository
             ->getModel()
             ->with(['property'])
@@ -73,8 +81,11 @@ class DashboardController extends Controller
         //dd($unitsToExpireSoon);
 
         return view($this->_config['view'])
-            ->with(compact('unitsCount',
-                'propertiesCount', 'tenantsCount', 'unitsToExpireSoon'));
+            ->with(compact(
+                'unitsCount',
+                'propertiesCount', 'tenantsCount',
+                'unitsToExpireSoon', 'totalIncome'
+            ));
     }
 
 }

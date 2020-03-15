@@ -5,15 +5,14 @@ namespace GriffonTech\Unit\Repositories;
 
 
 use GriffonTech\Core\Eloquent\Repository;
-use GriffonTech\Unit\Contracts\Unit;
+use GriffonTech\Unit\Contracts\UnitExpense;
 
-class UnitRepository extends Repository
+class UnitExpenseRepository extends Repository
 {
-
-    CONST OCCUPIED = 1;
 
     public function model()
     {
-        return Unit::class;
+        return UnitExpense::class;
     }
+
 }

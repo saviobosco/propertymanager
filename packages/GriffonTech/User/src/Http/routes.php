@@ -81,6 +81,19 @@ Route::group(['middleware' => ['web']], function(){
             ])->name('user.units.delete');
 
 
+            /** Unit Rent Payments  */
+
+            Route::get('/unit_rent_payments/create', 'GriffonTech\User\Http\Controllers\UnitRentPaymentsController@create')->defaults('_config', [
+                'view' => 'user::user.unit_rent_payments.create'
+            ])->name('user.unit_rent_payments.create');
+
+            Route::post('/unit_rent_payments/create', 'GriffonTech\User\Http\Controllers\UnitRentPaymentsController@store')->defaults('_config', [
+                'redirect' => 'user.unit_rent_payments'
+            ])->name('user.unit_rent_payments.create');
+
+
+
+
             /** Unit Tenants */
             Route::get('/units/{unit_id}/tenants/index', 'GriffonTech\User\Http\Controllers\TenantsController@index')->defaults('_config', [
                 'view' => 'user::user.tenants.index'

@@ -27,6 +27,11 @@
     <link href="{{ asset('user/assets/plugins/gritter/css/jquery.gritter.css') }}" rel="stylesheet" />
     <!-- ================== END PAGE LEVEL STYLE ================== -->
     <!-- Scripts -->
+    <style>
+        .fa-naira-sign::before{
+            content: "\20A6";
+        }
+    </style>
 </head>
 
 <body>

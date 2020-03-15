@@ -50,10 +50,10 @@
         <!-- begin col-3 -->
         <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-dollar-sign"></i></div>
+                <div class="stats-icon"><i class="fa fa-naira-sign"></i></div>
                 <div class="stats-info">
                     <h4>TOTAL INCOME</h4>
-                    <p>100,000</p>
+                    <p> {{ number_format($totalIncome, 2) }} </p>
                 </div>
                 <div class="stats-link">
                     <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
@@ -87,16 +87,14 @@
                                     <thead>
                                     <tr>
                                         <td>Unit Identifier</td>
-                                        <td>Lease Starts</td>
-                                        <td>Lease Ends</td>
-                                        <td>Is Occupied</td>
+                                        <td>Lease Expired</td>
+                                        <td> Tenants Notified </td>
                                     </tr>
                                     </thead>
                                     @foreach($units as $unit)
                                         <tr>
                                             <td>{{ $unit->identifier }}</td>
-                                            <td>{{ $unit->lease_starts }}</td>
-                                            <td>{{ $unit->lease_ends }}</td>
+                                            <td>{{ $unit->lease_ends->format('M d, Y') }}</td>
                                             <td>{{ ($unit->is_occupied) ? 'Yes' : 'No' }}</td>
                                         </tr>
                                     @endforeach
