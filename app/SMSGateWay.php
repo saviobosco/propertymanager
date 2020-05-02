@@ -58,9 +58,13 @@ class SMSGateWay
                     'Accepts'     => '*/*',
                 ]
             ]);
-            return $this->response->getBody()->read($this->response->getBody()->getSize());
+
+            $response_data = json_decode($this->response->getBody()->read($this->response->getBody()->getSize()), true);
+            if ((int)$response_data['status'] === 1) {
+                return true;
+            }
+            return false;
         } catch ( \Exception $exception) {
-            dd($exception->getMessage());
             return false;
         }
     }

@@ -83,6 +83,7 @@ class UnitExpiredSmsReminderCommand extends Command
             if ($unitNotified->count() > 2) {
                 continue;
             }
+
             $unitTenants = $this->tenantRepository->findWhere([
                 'unit_id' => $unit->id,
                 'active' => 1
@@ -96,7 +97,7 @@ class UnitExpiredSmsReminderCommand extends Command
                         if ($tenant->phone_number) {
                             $message = "This is to inform you that your rent at ".$unit->property->name ;
                             $message .= " expired on ". $unit->lease_ends->format('M d, Y'). ". ";
-                            $message .= "Please kindly call the management to let them know your intentions.";
+                            $message .= "Please you are expected to renew this rent within the space of two weeks. Thank you";
 
                             if ((new SMSGateWay())->sendMessage($tenant->phone_number, $message)
                                 ->sendRequestToSMSServer()) {
@@ -125,9 +126,9 @@ class UnitExpiredSmsReminderCommand extends Command
 
                         foreach ($unitTenants as $tenant) {
                             if ($tenant->phone_number) {
-                                $message = "This is to inform you that your rent at ".$unit->property->name ;
+                                $message = "Final Notice: This is to inform you that your rent at ".$unit->property->name ;
                                 $message .= " expired on ". $unit->lease_ends->format('M d, Y'). ". ";
-                                $message .= "Please you are expected to renew this rent within the space of two weeks. Thank you.";
+                                $message .= "Please you are expected to renew this rent. Thank you.";
 
                                 if ((new SMSGateWay())->sendMessage($tenant->phone_number, $message)
                                     ->sendRequestToSMSServer()) {
