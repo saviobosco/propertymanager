@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Rental Manager
+                    Rental Listings & Management
                 </div>
 
                 <div class="links">

@@ -14,7 +14,13 @@
 
                     <div class="form-group">
                         {!! Form::label('property_type', 'Property Type') !!}
-                        {!! Form::select('property_type', $propertyTypes, null,[ 'class' => 'form-control']) !!}
+                        <select name="property_type" id="property_type" class="form-control">
+
+                            <option value=""></option>
+                            @foreach($property_types as $key => $property_type)
+                                <option value="{{ $key }}"> {{ $property_type['name'] }} </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -24,39 +30,15 @@
 
                     <div class="form-group">
                         {!! Form::label('address', 'Address') !!}
-                        {!! Form::textarea('address', null, ['rows' => 4,  'class' => 'form-control']) !!}
+                        {!! Form::text('address', null, ['rows' => 4,  'class' => 'form-control']) !!}
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('city', 'City') !!}
-                        {!! Form::text('city', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('state', 'State') !!}
-                        {!! Form::text('state', null, [ 'class' => 'form-control']) !!}
-                    </div>
 
                     <div class="form-group">
                         {!! Form::label('country', 'Country') !!}
                         {!! Form::text('country', null, [ 'class' => 'form-control']) !!}
                     </div>
 
-                    <h4> LandLord Information </h4>
-                    <div class="form-group">
-                        {!! Form::label('landlord_name', 'LandLord Name') !!}
-                        {!! Form::text('landlord_name', null, [ 'class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('landlord_address', 'landlord Address') !!}
-                        {!! Form::text('landlord_address', null, [ 'class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('landlord_bank_details', 'LandLord bank Details') !!}
-                        {!! Form::textarea('landlord_bank_details', null, ['rows' => 4, 'class' => 'form-control']) !!}
-                    </div>
 
                     <div class="form-group">
                         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
@@ -67,4 +49,22 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA74luMgs-grl9Ve0gU8sJS8PS_y3Ggeqc&libraries=places"></script>
+
+    <script>
+        var geocoder = new google.maps.Geocoder();
+        var address = "new york";
+
+        geocoder.geocode( { 'address': address}, function(results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.latitude;
+                var longitude = results[0].geometry.location.longitude;
+                alert(latitude);
+            }
+        });
+    </script>
+
+
 @endsection

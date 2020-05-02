@@ -41,7 +41,7 @@
                                         </span>
                                     </div>
                                     {!! Form::text('lease_starts', null, [
-                                        'class' => 'form-control datepicker-default',
+                                        'class' => 'form-control',
                                          'placeholder' => 'Lease Start Date']) !!}
                                 </div>
                             </div>
@@ -57,8 +57,10 @@
                                         </span>
                                     </div>
                                     {!! Form::text('lease_ends', null, [
-                                    'class' => 'form-control datepicker-default',
-                                    'placeholder' => 'Lease End Date']) !!}
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Lease End Date',
+                                    'data-provider' => 'datepicker'
+                                    ]) !!}
                                 </div>
                             </div>
                         </div>

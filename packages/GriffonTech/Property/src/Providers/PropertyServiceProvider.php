@@ -15,6 +15,13 @@ class PropertyServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->registerConfig();
+    }
 
+    protected function registerConfig()
+    {
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/property_types.php', 'property_types'
+        );
     }
 }

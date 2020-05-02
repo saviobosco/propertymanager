@@ -127,7 +127,7 @@ class UnitExpiredSmsReminderCommand extends Command
                             if ($tenant->phone_number) {
                                 $message = "This is to inform you that your rent at ".$unit->property->name ;
                                 $message .= " expired on ". $unit->lease_ends->format('M d, Y'). ". ";
-                                $message .= "Please call the management to indicate your interest to retaining or leaving the property.";
+                                $message .= "Please you are expected to renew this rent within the space of two weeks. Thank you.";
 
                                 if ((new SMSGateWay())->sendMessage($tenant->phone_number, $message)
                                     ->sendRequestToSMSServer()) {

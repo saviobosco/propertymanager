@@ -15,7 +15,7 @@ class PropertiesController
 
     protected $_config;
 
-    protected $PropertyTypes = PropertyRepository::PROPERTY_TYPES;
+    protected $PropertyTypes;
 
     protected $propertyRepository;
     protected $tenantRepository;
@@ -36,6 +36,8 @@ class PropertiesController
         $this->tenantRepository = $tenantRepository;
 
         $this->propertyUnitTypeRepository = $propertyUnitTypeRepository;
+
+        $this->PropertyTypes = config()->get('property_types');
     }
 
 
@@ -53,7 +55,8 @@ class PropertiesController
 
     public function create()
     {
-        return view($this->_config['view'])->with(['propertyTypes' => $this->PropertyTypes]);
+        return view($this->_config['view'])
+            ->with(['property_types' => $this->PropertyTypes]);
     }
 
     public function store(Request $request)

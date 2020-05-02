@@ -52,7 +52,7 @@
                                 <td>
                                      @if ($unit->tenants->count())
                                         @foreach ($unit->tenants as $tenant)
-                                            <a href="{{ route('user.tenants.show', [$tenant->unit_id, $tenant->id]) }}"> {{ $tenant->first_name }} </a>,
+                                            <a href="{{ route('user.tenants.show', [$tenant->id]) }}"> {{ $tenant->first_name }} </a>,
                                         @endforeach
 
                                     @endif
