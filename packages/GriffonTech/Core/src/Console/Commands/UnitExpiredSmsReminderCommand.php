@@ -122,6 +122,8 @@ class UnitExpiredSmsReminderCommand extends Command
             } else {
 
                 if ( now()->weekOfYear > $unitNotified[0]->created_at->weekOfYear ) {
+                    // check if the date is up to 7 days or more
+                    // before sending the notification sms.
                     if (!$unitTenants->isEmpty()) {
 
                         foreach ($unitTenants as $tenant) {
