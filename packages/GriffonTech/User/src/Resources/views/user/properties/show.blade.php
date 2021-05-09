@@ -32,7 +32,7 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <h2>Units (0) </h2>
+                                        <h2>Units ({{$property->units()->count()}}) </h2>
                                         <a href="{{ route('manager.properties.units.create', ['property_id' => $property->id]) }}">add</a>
                                         <hr>
 

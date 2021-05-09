@@ -50,7 +50,7 @@
                             <th>Email</th>
                             <!--                        <th>Resident center status</th>
                                                     <th>Text message status</th>-->
-                            <th>Status</th>
+                            <th style="width: 100px;">Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,7 +79,6 @@
                                         <span><a href="">{{ $tenant->alternate_email_address }}</a></span>
                                     </td>
                                     <td>
-                                        Active
                                         <div class="float-right">
                                             <div class="quick-menu">
                                                 <div class="quick-menu-icon"></div>
@@ -112,6 +111,8 @@
                                             </div>
 
                                         </div>
+
+                                        Active
                                     </td>
                                 </tr>
 

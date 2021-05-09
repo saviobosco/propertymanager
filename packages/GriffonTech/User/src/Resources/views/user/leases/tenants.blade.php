@@ -13,7 +13,7 @@
                     <a class="btn btn-success" href="javascript:;" data-toggle="modal" data-target="#modal-sm">Attach Tenant</a>
                 </div>
                 <h5> Lease Tenants - {{ $lease->property->address }} ({{ $lease->property->type_name }}) - {{ $lease->unit->identifier }}</h5>
-                <a href="">View lease</a>
+                <a href="{{ route('manager.properties.leases.index') }}">All leases</a>
             </div>
 
             <div>
@@ -47,8 +47,8 @@
                                     <div class="form-element form-element--icon icon-tel icon-tel--fax"> {{ $lease_tenant->tenant->fax_phone_number }} </div>
                                 </td>
                                 <td>
-                                    <span><a href="">Johnboscoomebe@yahoo.com</a></span> <br>
-                                    <span><a href="">saviobosco4real@gmail.com</a></span>
+                                    <span><a href="">{{ $lease_tenant->tenant->primary_email_address }}</a></span> <br>
+                                    <span><a href="">{{ $lease_tenant->tenant->alternate_email_address }}</a></span>
                                 </td>
                                 <td>
                                     <a class="btn btn-danger btn-sm" href="#"

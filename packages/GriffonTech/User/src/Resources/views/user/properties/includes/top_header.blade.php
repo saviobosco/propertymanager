@@ -16,7 +16,7 @@
             <a class="quick__nav__link" href="">Financials</a>
         </li>
         <li class="quick__nav__item">
-            <a class="quick__nav__link {{ ( strpos(request()->url(), 'units') !== false) ? 'active' : '' }}" href="{{ route('manager.properties.units.index', ['property' => $property->id]) }}">Units(0)</a>
+            <a class="quick__nav__link {{ ( strpos(request()->url(), 'units') !== false) ? 'active' : '' }}" href="{{ route('manager.properties.units.index', ['property' => $property->id]) }}">Units({{ $property->units()->count() }})</a>
         </li>
         <li class="quick__nav__item">
             <a class="quick__nav__link" href="">Event History</a>

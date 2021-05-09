@@ -99,6 +99,7 @@ class TenantsController extends Controller
 
         $countries = ['' => ''] + $this->countryRepository->listArray();
         $states = $this->countryRepository->getStatesJson();
+
         return view($this->_config['view'])
             ->with(compact('tenant',
                 'countries',

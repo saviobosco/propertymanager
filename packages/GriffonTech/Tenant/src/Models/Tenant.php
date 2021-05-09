@@ -31,7 +31,9 @@ class Tenant extends Model implements TenantContract
         'emergency_contact_relationship',
         'emergency_contact_phone_number',
         'emergency_contact_email_address',
-        'company_id'
+        'company_id',
+        'is_cosigner',
+        'same_as_unit_address'
     ];
 
     public function leases()

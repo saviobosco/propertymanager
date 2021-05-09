@@ -69,7 +69,9 @@
 
                             <div class="form-group">
                                 <label for="same_as_unit_address">
-                                    <input id="same_as_unit_address" type="checkbox" name="same_as_unit_address"> Same as unit address
+                                    <input type="hidden" name="same_as_unit_address" value="0">
+                                    {!! Form::checkbox('same_as_unit_address', 1, null, ['id' => 'same_as_unit_address']) !!}
+                                    Same as unit address
                                 </label>
                             </div>
 
