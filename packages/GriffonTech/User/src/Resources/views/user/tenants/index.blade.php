@@ -62,7 +62,7 @@
                                         <span>Tenant</span>
                                     </td>
                                     <td class="border-left-0"></td>
-                                    <td>10 Oharugo(flats)- Room 1</td>
+                                    <td></td>
                                     <td>
                                         <div class="form-element form-element--icon icon-tel icon-tel--home"> {{ $tenant->home_phone_number }} </div>
                                         <div class="form-element form-element--icon icon-tel icon-tel--work"> {{ $tenant->work_phone_number }}</div>
@@ -70,8 +70,8 @@
                                         <div class="form-element form-element--icon icon-tel icon-tel--fax"> {{ $tenant->fax_phone_number }} </div>
                                     </td>
                                     <td>
-                                        <span><a href="">Johnboscoomebe@yahoo.com</a></span> <br>
-                                        <span><a href="">saviobosco4real@gmail.com</a></span>
+                                        <span><a href="">{{ $tenant->primary_email_address }} </a></span> <br>
+                                        <span><a href="">{{ $tenant->alternate_email_address }}</a></span>
                                     </td>
                                     <td>
                                         Active
