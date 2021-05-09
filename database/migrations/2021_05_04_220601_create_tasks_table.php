@@ -19,7 +19,6 @@ class CreateTasksTable extends Migration
             $table->string('subject');
             $table->text('description')->nullable();
             $table->unsignedInteger('property_id')->nullable();
-            $table->unsignedInteger('unit_id')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->enum('priority',['low','normal','high'])
                 ->default('normal')
