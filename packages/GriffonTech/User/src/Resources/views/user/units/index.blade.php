@@ -39,7 +39,16 @@
                                     <a href="{{ route('manager.properties.units.show', ['property_id'=>$property->id,'id' => $unit->id]) }}"> {{ $unit->identifier }}</a>
                                 </td>
                                 <td> {{ $unit->property->address }} </td>
-                                <td></td>
+                                <td>
+                                    <?php $activeLease = $unit->leases()->first(); ?>
+                                    @if ($activeLease)
+                                            @if ($activeLease->tenants->isNotEmpty())
+                                                @foreach($activeLease->tenants as $lease_tenant)
+                                                    <a href="">{{ $lease_tenant->tenant->full_name }}</a>,
+                                                @endforeach
+                                            @endif
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="float-right">
                                         <div class="quick-menu">

@@ -53,12 +53,8 @@ class Unit extends Model implements UnitContract
     }
 
 
-    public function updateLease($start_date, $end_date)
+    public function leases()
     {
-        $this->forceFill([
-            'lease_starts' => $start_date,
-            'lease_ends' => $end_date
-        ]);
-        return $this->update();
+        return $this->hasMany(LeaseProxy::modelClass(), 'unit_id', 'id');
     }
 }
