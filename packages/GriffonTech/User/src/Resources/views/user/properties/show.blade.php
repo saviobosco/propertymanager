@@ -1,104 +1,101 @@
 @extends('user::layouts.master')
 
-@section('title')Edit Property @stop
+@section('page_title') {{ $property->address }}  @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-inverse">
-                <div class="panel-heading">
-                    <h4 class="panel-title">View Property</h4>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <td>Property Name</td>
-                            <td>{{ $property->name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Property Type</td>
-                            <td>{{ $property->property_type }}</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td> {{ $property->address }}</td>
-                        </tr>
-                        <tr>
-                            <td>City</td>
-                            <td>{{ $property->city }}</td>
-                        </tr>
-                        <tr>
-                            <td>State</td>
-                            <td>{{ $property->state }}</td>
-                        </tr>
-                        <tr>
-                            <td>Country</td>
-                            <td>{{ $property->country }}</td>
-                        </tr>
-                    </table>
 
-                    <h4> LandLord Details</h4>
-                    <table class="table">
-                        <tr>
-                            <td>LandLord Name</td>
-                            <td>{{ $property->landlord_name }}</td>
-                        </tr>
-                        <tr>
-                            <td>LandLord Address</td>
-                            <td>{{ $property->landlord_address }}</td>
-                        </tr>
-                        <tr>
-                            <td>LandLord Bank Details</td>
-                            <td>{{ $property->landlord_bank_account_details }}</td>
-                        </tr>
-                    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-4">
+                    <!-- /.card-header -->
+                    <div class="card-body">
 
-                    <h4> Units</h4>
-                    @if($property->units)
+                        @include('user::user.properties.includes.top_header')
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <td>
-                                    #
-                                </td>
-                                <td> Identifier </td>
-                                <td> Lease Starts </td>
-                                <td> Lease Ends </td>
-                                <td> Is Occupied </td>
-                                <td> Tenants </td>
-                                <td> last Updated</td>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="img-responsive">
+                                                <img src="{{ asset('assets/dist/img/photo4.jpg') }}" alt="{{ $property->address }}" class="img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <address>
+                                                {{ $property->address }}, <br>
+                                                {{ $property->state_name}}({{ $property->state }}) ,{{ $property->zip_code }}<br>
+                                                {{ $property->country_name }} ({{ $property->country}})
+                                            </address>
+                                        </div>
+                                    </div>
 
-                            @foreach($property->units as $unit)
-                                <tr>
-                                    <td> {{ $unit->id }} </td>
-                                    <td> {{ $unit->identifier }} </td>
-                                    <td> {{ $unit->lease_starts }} </td>
-                                    <td> {{ $unit->lease_ends }} </td>
-                                    <td> {{ ($unit->is_occupied) ? 'Yes' : 'No' }} </td>
-                                    <td>
-                                        @if ($unit->tenants->count())
-                                            @foreach ($unit->tenants as $tenant)
-                                                <a href="{{ route('user.tenants.show', $tenant->id) }}"> {{ $tenant->first_name }} </a>,
+                                    <div class="mt-3">
+                                        <h2>Units (0) </h2>
+                                        <a href="{{ route('manager.properties.units.create', ['property_id' => $property->id]) }}">add</a>
+                                        <hr>
+
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <h2>Property Owners</h2>
+                                        <a href="{{ route('user.property_owners.create', ['property_id' => $property->id]) }}">Add</a>
+                                        <hr>
+                                        @if (isset($property_owners))
+                                            @foreach($property_owners as $property_owner)
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <p> {{ $property_owner->company_name }} </p>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <p> {{ $property_owner->mobile_phone_number }} </p>
+                                                                <p> {{ $property_owner->home_phone_number }} </p>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <p> Ownership percentage : {{ $rental_owner_percentages[$property_owner->id] }}%</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             @endforeach
-
                                         @endif
-                                    </td>
-                                    <td> {{ $unit->updated_at }} </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
 
-                        </table>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <h2>Leases</h2>
+                                        <hr>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <h2>Events </h2>
+                                        <hr>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <h2>Files </h2>
+                                        <hr>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+
+                                </div>
+                            </div>
+                        </div>
 
 
-                    @endif
-
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
         </div>
-    </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
 @endsection

@@ -13,11 +13,11 @@ class CreateAmenitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('amenities', function (Blueprint $table) {
+        /*Schema::create('amenities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
             $table->string('icon')->nullable();
-        });
+        });*/
     }
 
     /**
@@ -27,6 +27,6 @@ class CreateAmenitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('amenities');
+        //Schema::dropIfExists('amenities');
     }
 }

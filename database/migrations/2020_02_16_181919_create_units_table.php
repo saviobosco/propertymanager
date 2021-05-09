@@ -16,10 +16,20 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('property_id');
-            $table->string('identifier')->unique();
-            $table->date('lease_starts')->nullable();
-            $table->date('lease_ends')->nullable();
-            $table->boolean('is_occupied')->nullable()->default(0);
+            $table->string('identifier', 100);
+            $table->string('market_rent', 15)->nullable();
+            $table->string('size', 20)->nullable();
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
+            $table->string('address_line3')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('room')->nullable();
+            $table->string('bath_room')->nullable();
+            $table->text('description')->nullable();
+            $table->string('features')->nullable();
             $table->timestamps();
         });
     }

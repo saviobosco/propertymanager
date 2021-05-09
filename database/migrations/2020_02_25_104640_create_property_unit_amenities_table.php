@@ -13,11 +13,11 @@ class CreatePropertyUnitAmenitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_unit_amenities', function (Blueprint $table) {
+        /*Schema::create('property_unit_amenities', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('property_unit_type_id');
             $table->unsignedInteger('amenity_id');
-        });
+        });*/
     }
 
     /**
@@ -27,6 +27,6 @@ class CreatePropertyUnitAmenitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_unit_amenities');
+        //Schema::dropIfExists('property_unit_amenities');
     }
 }

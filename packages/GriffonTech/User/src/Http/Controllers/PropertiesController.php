@@ -4,11 +4,16 @@
 namespace GriffonTech\User\Http\Controllers;
 
 
+use GriffonTech\Property\Repositories\PropertyOwnerRepository;
 use GriffonTech\Property\Repositories\PropertyRepository;
+use GriffonTech\Property\Repositories\PropertyTypeRepository;
 use GriffonTech\Property\Repositories\PropertyUnitTypeRepository;
+use GriffonTech\Property\Repositories\RentalOwnerPropertyRepository;
 use GriffonTech\Tenant\Repositories\TenantRepository;
+use GriffonTech\Unit\Repositories\UnitRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PragmaRX\Countries\Package\Countries;
 
 class PropertiesController
 {
@@ -19,14 +24,20 @@ class PropertiesController
 
     protected $propertyRepository;
     protected $tenantRepository;
-    protected $propertyUnitTypeRepository;
+    protected $rentalOwnerPropertyRepository;
+    protected $propertyTypeRepository;
+    protected $propertyOwnerRepository;
+    protected $unitRepository;
 
+    protected $countries;
 
     public function __construct(
         PropertyRepository $propertyRepository,
         TenantRepository $tenantRepository,
-        PropertyUnitTypeRepository $propertyUnitTypeRepository
-
+        PropertyTypeRepository $propertyTypeRepository,
+        RentalOwnerPropertyRepository $rentalOwnerPropertyRepository,
+        PropertyOwnerRepository $propertyOwnerRepository,
+        UnitRepository $unitRepository
     )
     {
         $this->_config = request('_config');
@@ -35,9 +46,17 @@ class PropertiesController
 
         $this->tenantRepository = $tenantRepository;
 
-        $this->propertyUnitTypeRepository = $propertyUnitTypeRepository;
+        $this->propertyTypeRepository = $propertyTypeRepository;
 
-        $this->PropertyTypes = config()->get('property_types');
+        $this->rentalOwnerPropertyRepository = $rentalOwnerPropertyRepository;
+
+        $this->propertyOwnerRepository = $propertyOwnerRepository;
+        $this->unitRepository = $unitRepository;
+
+        $this->countries = Countries::all()
+            ->sortBy('name.common')
+            ->pluck('name.common', 'cca3')
+            ->toArray();
     }
 
 
@@ -45,7 +64,7 @@ class PropertiesController
     public function index()
     {
         $properties = $this->propertyRepository
-            ->with(['units:id,property_id'])
+            ->with(['rental_owners.owner'])
             ->findWhere([
             'user_id' => auth()->user()->id
         ]);
@@ -55,26 +74,46 @@ class PropertiesController
 
     public function create()
     {
+        $countries = $this->countries;
+        $countries = ['' => ''] + $countries;
+
+        $states = Countries::all()
+            ->map(function($value) {
+                return $value->hydrateStates()->states->pluck('extra.name_en', 'postal');
+            });
+
+        $property_types = $this->propertyTypeRepository
+            ->getTypesGroupedByCategory()->toArray();
+
         return view($this->_config['view'])
-            ->with(['property_types' => $this->PropertyTypes]);
+            ->with([
+                'countries' => $countries,
+                'property_types' => $property_types,
+                'states' => $states->toJson()
+            ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'address' => 'required',
-
+            'property_type' => 'required',
+            'address_line1' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required',
+            'country' => 'required'
         ]);
-        $requestData = $request->all();
-        $requestData['user_id'] = auth()->user()->id;
 
-        $property = $this->propertyRepository->create($requestData);
+        $new_data = $request->input();
+        $new_data['user_id'] = auth()->user()->id;
+        $new_data['company_id'] = auth()->user()->company_id;
+
+        $property = $this->propertyRepository->create($new_data);
         if ($property)
         {
-            session()->flash('success', 'Your new property was added successfully');
+            session()->flash('success', 'New property was added successfully');
         } else {
-            session()->flash('error', 'Your new property could not be added. Please try again later');
+            session()->flash('error', 'New property could not be added. Please try again later');
         }
         return redirect()
             ->route($this->_config['redirect']);
@@ -85,7 +124,25 @@ class PropertiesController
     {
         $property = $this->propertyRepository->findOrFail($id);
 
-        return view($this->_config['view'])->with(compact('property'));
+        $rental_owner_properties = $this->rentalOwnerPropertyRepository
+            ->findWhere(['property_id' => $property->id]);
+        $property_owner_ids = $rental_owner_properties
+            ->pluck('property_owner_id')
+            ->toArray();
+
+        $rental_owner_percentages = $rental_owner_properties
+            ->pluck('ownership_percentage', 'property_owner_id');
+
+        $property_owners = $this->propertyOwnerRepository->findWhereIn('id', $property_owner_ids);
+        $units = null;
+        $leases = null;
+        $files = null;
+
+        return view($this->_config['view'])
+            ->with(compact('property',
+                'property_owners',
+                'rental_owner_percentages',
+                'units'));
     }
 
     public function edit($id)
@@ -164,17 +221,11 @@ class PropertiesController
             ->with(compact('tenants'));
     }
 
-    public function get_property_unit_types($id)
+    public function getUnits($id)
     {
-        $propertyUnitTypes = $this->propertyUnitTypeRepository->with(['unit_type'])
-            ->findWhere(['property_id' => $id])
-            ->map(function($row){
-                $row->type = $row->unit_type->type . ' : ' . $row->amount;
-                return $row;
-            })
-            ->pluck('type', 'id');
+        return $this->unitRepository->findWhere([
+            'property_id' => $id
+        ],['identifier', 'id'])->pluck('identifier', 'id');
 
-        return view($this->_config['view'])
-            ->with(compact('propertyUnitTypes'));
     }
 }

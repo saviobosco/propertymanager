@@ -1,186 +1,146 @@
 @extends('user::layouts.master')
 
-@section('title') View Unit @stop
+@section('page_title') {{ $property->address_line1 }}({{ $property->type->name }}) - {{ $unit->identifier }} @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-inverse">
-                <div class="panel-heading">
-                    <h4 class="panel-title"> {{ $unit->identifier }} </h4>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <td>Property </td>
-                            <td>{{ $unit->property->name }}</td>
-                        </tr>
-                        <tr>
-                            <td> Unit # </td>
-                            <td> {{ $unit->identifier }}</td>
-                        </tr>
-                        <tr>
-                            <td>Lease Starts</td>
-                            <td>{{ $unit->lease_starts->format('M d, Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Lease Expires</td>
-                            <td>{{ $unit->lease_ends->format('M d, Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td> Duration </td>
-                            <td> {{ $unit->lease_ends->diffInDays($unit->lease_starts) }} Days </td>
-                        </tr>
-                        <tr>
-                            <td>Is Occupied</td>
-                            <td>{!! ($unit->is_occupied) ? ' <span class="label label-success"> Yes </span>' : ' <span class="label label-danger">No</span> ' !!}</td>
-                        </tr>
-                    </table>
 
-                    <h4> Tenants</h4>
+    <div class="card">
+        <div class="card-body">
 
-                    @if ($unit->tenants)
-                    <div class="row">
-                        @foreach($unit->tenants as $tenant)
-                        <div class="col-xs-3">
-                            <div class="card border-0">
-                                <img class="card-img-top" src="" alt="">
-                                <div class="card-body">
-                                    <h4 class="card-title m-t-0 m-b-10"> {{ $tenant->first_name.' '. $tenant->last_name }} </h4>
-                                    <p class="card-text">
-                                        {{ $tenant->occupation }}
-                                    </p>
-                                    <p> Account Status : <small> {{ ($tenant->active) ? 'Active' : 'Unactive' }} </small></p>
-                                    <div class="text-center">
-                                        <a href="javascript:;" class="btn btn-sm btn-info">view</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
-                    <hr>
+            @include('user::user.properties.includes.top_header')
 
-                    <div class="m-t-25">
-                        <h4> Unit Rent Payments </h4>
+            <div>
+                <div class="row">
+                    <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"> Unit Rent Payment </h4>
-                                    </div>
-                                    <div class="panel-body">
-                                        {!! Form::open(['route' => 'user.unit_rent_payments.create']) !!}
-
-                                        {!! Form::hidden('unit_id' , $unit->id) !!}
-                                        <div class="form-group">
-                                            <input type="text" value="{{ $unit->identifier }}" disabled class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="amount_paid"> Amount Paid </label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">&#8358; </span>
-                                                </div>
-                                                {!! Form::text('amount', null, ['class' => 'form-control']) !!}
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                {!! Form::label('lease_starts', 'Lease Starts') !!}
-                                                <div class="input-group m-b-10">
-                                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar-alt"></i>
-                                        </span>
-                                                    </div>
-                                                    {!! Form::text('lease_starts', null, [
-                                                        'class' => 'form-control datepicker-default',
-                                                         'placeholder' => 'Lease Start Date']) !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                {!! Form::label('lease_ends', 'Lease Ends') !!}
-                                                <div class="input-group m-b-10">
-                                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-calendar-alt"></i>
-                                        </span>
-                                                    </div>
-                                                    {!! Form::text('lease_ends', null, [
-                                                        'class' => 'form-control datepicker-default',
-                                                         'placeholder' => 'Lease Ends Date']) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="note"> Comment </label>
-                                            {!! Form::textarea('note', null, [ 'rows' => 5, 'class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="generate_receipts">
-                                                <input type="checkbox" name="generate_receipt" value="yes" checked> Generate Payment Receipt
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary"> Update Rent </button>
-                                        </div>
-                                        {!! Form::close() !!}
-                                    </div>
+                            <div class="col-sm-3">
+                                <div class="img-responsive">
+                                    <img src="{{ asset('assets/dist/img/photo4.jpg') }}" alt="{{ $unit->identifier }}" class="img-thumbnail">
                                 </div>
                             </div>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <section class="col-xs-12">
+                                        <span> Occupied</span>
+                                        <h2>
+                                            {{ $property->address_line1 }}({{ $property->type->name }}) - {{ $unit->identifier }}
+                                            <a href="{{ route('manager.properties.units.edit', $unit->id) }}">edit</a>
+                                        </h2>
+                                        <div>
+                                            <p>Address</p>
+                                            <address>
+                                                {{ $unit->address_line1. ' '. $unit->address_line2.' '. $unit->address_line3 }} <br>
+                                                {{ $unit->city }}  {{ $unit->state }} {{ $unit->zip_code }}<br>
+                                            </address>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <td>Amount Paid </td>
-                                            <td>Comment </td>
-                                            <td>Lease Starts </td>
-                                            <td>Lease Expires </td>
-                                            <td>Created On </td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @if(isset($unit->rent_payments ) && !$unit->rent_payments->isEmpty())
-                                            @foreach($unit->rent_payments as $payment)
-                                            <tr>
-                                                <td>&#8358;{{ number_format($payment->amount, 2) }}</td>
-                                                <td>{{ $payment->note }}</td>
-                                                <td>{{ $payment->lease_starts->format('M d, Y') }}</td>
-                                                <td>{{ $payment->lease_ends->format('M d, Y') }}</td>
-                                                <td>{{ $payment->created_at }}</td>
-                                            </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="5" class="text-center"> No Records </td>
-                                            </tr>
-                                        @endif
-                                        </tbody>
-                                    </table>
+                        <section class="mt-3">
+                            <h2>Listing Information </h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <p>Market Rent</p>
+                                    <span>{{ $unit->market_rent }}</span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p>Size</p>
+                                    <span>{{ $unit->size }}</span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p>Bedrooms</p>
+                                    <span>{{ $rooms[$unit->room] }}</span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p>Bathrooms</p>
+                                    <span>{{ $bath_rooms[$unit->bath_room] }}</span>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-sm-12">
+                                    <p class="text-bold">Description</p>
+                                    {!! nl2br($unit->description) !!}
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="mt-3">
+                            <h2>Leases </h2>
+                            @if ($unit->leases)
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Start-End</th>
+                                        <th>Tenant</th>
+                                        <th>Type</th>
+                                        <th>Rent</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            @else
+                                <a href="">Add Lease</a>
+                            @endif
+
+                        </div>
+
+                        <div class="mt-5">
+                            <h2>Appliances </h2>
+                            <hr>
+
+                        </div>
+
+                        <div class="mt-5">
+                            <h2>Notes</h2>
+                            <hr>
+
+                        </div>
+
+                        <div class="mt-5">
+                            <h2>Files</h2>
+                            <hr>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <ul>
+                                    <li>
+                                        <a href=""> Balance: <span class="float-right">0.00</span> </a>
+                                    </li>
+                                    <li>
+                                        <a href=""> Repayments: <span class="float-right">0.00</span> </a>
+                                    </li>
+                                    <li>
+                                        <a href=""> Deposits Held: <span class="float-right">0.00</span> </a>
+                                    </li>
+                                    <li>
+                                        <a href=""> Rent <span class="float-right">0.00</span> </a>
+                                    </li>
+                                </ul>
+
+                                <a href="">
+                                    Payment is due on the 1st of the month. If payment isn't received, a one-time fee of $50.00 will be charged on the 2nd of each month. An additional daily fee of $10.00 will be charged starting on the 3rd and continue until the month ends. Late fees will never exceed $100.00 per month.
+                                </a>
+
+                                <div class="mt-4">
+                                    <button class="btn btn-success btn-sm">Receive payment</button>
+                                    <a href="#" class="ml-4">Lease ledger</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+
         </div>
     </div>
+
 @endsection
 
-@section('footer-scripts')
-    <script>
-        $('.datepicker-default').datepicker({
-            todayHighlight: true,
-            format: "yyyy-mm-dd"
-        });
-    </script>
-@stop

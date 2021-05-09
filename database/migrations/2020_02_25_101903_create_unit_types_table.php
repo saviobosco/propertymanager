@@ -13,10 +13,10 @@ class CreateUnitTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('unit_types', function (Blueprint $table) {
+        /*Schema::create('unit_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
-        });
+        });*/
     }
 
     /**
@@ -26,6 +26,6 @@ class CreateUnitTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit_types');
+        //Schema::dropIfExists('unit_types');
     }
 }

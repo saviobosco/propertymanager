@@ -1,167 +1,312 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <title>{{ config('app.name', 'Property Manager') }}</title>
-
-
-    <!-- CSRF Token -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> @yield('page_title') | {{ config('app.name') }}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="" name="property manager" />
-    <meta content="" name="saviobosco" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <!-- Styles -->
-{{--
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
---}}
-    <!-- ================== BEGIN BASE CSS STYLE ================== -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link href="{{ asset('user/assets/css/material/app.min.css') }}" rel="stylesheet" />
-    <!-- ================== END BASE CSS STYLE ================== -->
-
-    <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
-    <link href="{{ asset('user/assets/plugins/jvectormap-next/jquery-jvectormap.css') }}" rel="stylesheet" />
-    <link href="{{ asset('user/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('user/assets/plugins/gritter/css/jquery.gritter.css') }}" rel="stylesheet" />
-    <!-- ================== END PAGE LEVEL STYLE ================== -->
-    <!-- Scripts -->
+<!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.css') }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.css') }}">
+    <!-- jQuery -->
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <style>
-        .fa-naira-sign::before{
-            content: "\20A6";
+        .card {
+            border-radius: 0;
+        }
+        div.form-group label {
+            font-weight: 500 !important;
+        }
+
+
+        .tooltip-inner {
+            background-color: rgba( 0, 0, 0, 0.8);
+            font-size: .9em;
+            padding: 4px;
+        }
+
+        .required > label::after {
+            content: " * ";
+            color: red;
+        }
+
+
+
+
+
+
+        td.no-right-border {
+            border-right: none;
+        }
+        td.no-left-border {
+            border-left: none;
+        }
+        .quick-menu {
+            position: relative;
+        }
+        .quick-menu-icon {
+            width: 26px;
+            height: 26px;
+            position: relative;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .quick-menu-icon:hover:before {
+            background-image: url(/assets/dist/img/quick-menu-green.svg);
+        }
+        .quick-menu-icon:before {
+            display: block;
+            width: 25px;
+            height: 25px;
+            content: " ";
+            position: relative;
+            background: url(/assets/dist/img/quick-menu-grey.svg) center center no-repeat;
+            background-size: 24px;
+        }
+
+        .quick-menu-popover {
+            margin-top: 4px;
+            display: none;
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .25);
+            border: 1px solid #cfcfcf;
+            border-radius: 5px;
+            width: 200px;
+            background-color: #fff;
+            position: absolute;
+            right: 60%;
+            z-index: 10;
+        }
+        .quick-menu-popover.show {
+            display: block;
+        }
+
+        .quick-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-menu-link {
+            display: block;
+            height: 37px;
+            padding: 3px 20px;
+            cursor: pointer;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 1px 0;
+            box-sizing: border-box;
+            white-space: nowrap;
+            font-weight: 600;
+            letter-spacing: .5px;
+            line-height: 29px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #4f4f52;
+        }
+        .quick-menu-link:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #4f4f52;
+        }
+        .form__column {
+            float: left;
+        }
+
+        .quick__nav__tab {
+            list-style: none;
+            padding: 0;
+            border-bottom: 1px solid gray;
+        }
+        .quick__nav__tab .quick__nav__item {
+            display: inline-block;
+        }
+        .quick__nav__tab .quick__nav__link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px 5px 0 0;
+            color: #212529;
+            font-weight: 600;
+        }
+        .quick__nav__tab .quick__nav__link.active {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .small-caps {
+            font-variant: small-caps;
+        }
+
+        .card-detail {
+            border-radius: 5px;
+            border-left: 5px solid #1e7e34;
+        }
+        .form--element {
+            display: block;
+        }
+        .form-element--icon {
+            padding-left: 20px;
+        }
+        .icon-tel {
+            background-size: 14px;
+            background-repeat: no-repeat;
+            background-position: left center;
+            padding-left: 20px;
+        }
+        .icon-tel--home, .icon-tel--home-std {
+            background-image: url(/css/icons/tel-home-grey.svg);
+        }
+        .icon-tel--work, .icon-tel--work-std {
+            background-image: url(/css/icons/tel-work-grey.svg);
+        }
+        .icon-tel--mobile, .icon-tel--mobile-std {
+            background-image: url(/css/icons/tel-mobile-grey.svg);
+        }
+        .icon-tel--fax, .icon-tel--fax-std {
+            background-image: url(/css/icons/tel-fax-grey.svg);
+        }
+        .border-radius-5 {
+            border-radius: 5px;
         }
     </style>
 </head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
 
-<body>
-<!-- begin #page-loader -->
-<div id="page-loader" class="fade show">
-    <div class="material-loader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
-        </svg>
-        <div class="message">Loading...</div>
-    </div>
-</div>
-<!-- end #page-loader -->
+@include('user::layouts.header.index')
 
-<!-- begin #page-container -->
-<div id="page-container" class="fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar">
-    <!-- begin #header -->
-    @include('user::layouts.header.index')
-    <!-- end #header -->
+@include('user::layouts.sidebar.index')
 
-    <!-- begin #sidebar -->
-    @include('user::layouts.sidebar.index')
-    <!-- end #sidebar -->
-
-    <!-- begin #content -->
-    <div id="content" class="content">
-        <!-- begin breadcrumb -->
-        @include('user::layouts.header.breadcrumb.index')
-        <!-- end breadcrumb -->
-
-
-        <!-- begin page-header -->
-        <h1 class="page-header">Hi,{{ auth()->user()->name }}
-        </h1>
-        <!-- end page-header -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Main content -->
+        <section class="content">
+            @include('user::layouts.flash_messages')
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 mt-4">
+                        @yield('content')
+                    </div>
+                </div>
             </div>
-        @endif
-        @if(Session::has('success'))
-            <p class="alert alert-success">{{ Session::get('success') }}</p>
-        @endif
-
-        @if(Session::has('warning'))
-            <p class="alert alert-warning">{{ Session::get('warning') }}</p>
-        @endif
-
-        @if(Session::has('info'))
-            <p class="alert alert-info">{{ Session::get('info') }}</p>
-        @endif
-        @if(Session::has('error'))
-            <p class="alert alert-danger">{{ Session::get('error') }}</p>
-        @endif
-
-        @yield('content')
+        </section>
+        <!-- /.content -->
     </div>
-    <!-- end #content -->
+    <!-- /.content-wrapper -->
 
 
+@include('user::layouts.footer.index')
 
-    <!-- begin scroll to top btn -->
-    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
-    <!-- end scroll to top btn -->
+<!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
-<!-- end page container -->
+<!-- ./wrapper -->
 
-<!-- ================== BEGIN BASE JS ================== -->
-<script src="{{ asset('user/assets/js/app.min.js') }}"></script>
-<script src="{{ asset('user/assets/js/theme/material.min.js') }}"></script>
-<!-- ================== END BASE JS ================== -->
-
-<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-<script src="{{ asset('user/assets/plugins/gritter/js/jquery.gritter.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/flot/jquery.flot.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/flot/jquery.flot.time.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/flot/jquery.flot.resize.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/flot/jquery.flot.pie.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/jvectormap-next/jquery-jvectormap.min.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js') }}"></script>
-<script src="{{ asset('user/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="{{ asset('user/assets/js/demo/dashboard.js') }}"></script>
-<!-- ================== END PAGE LEVEL JS ================== -->
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-    var handleRecordDeletion = function()
-    {
-        $('[data-click="delete"]').click(function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this record!',
-                icon: 'error',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-            }).then(function(result) {
-                if (result.value) {
-                    // submit the deletion request
-                    if (e.target.dataset.hasOwnProperty('link'))
-                        var link = e.target.dataset.link;
-                        $.ajax({
-                            url: link,
-                            type: 'post',
-                            data: {
-                                '_token': "{{ csrf_token() }}",
-                                '_method': 'DELETE'
-                            },
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                            success: function(data, statusText) {
-                                if (data.redirect) {
-                                    window.location.href = data.redirect;
-                                }
-                            }
-                        });
-                }
-            });
-        });
-    };
-    handleRecordDeletion();
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
-@yield('footer-scripts')
-</body>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
+<!-- Sparkline -->
+<script src="{{ asset('assets/plugins/sparklines/sparkline.js') }}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{ asset('assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+<!-- daterangepicker -->
+<script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+{{--
+<script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+--}}
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<!-- Summernote -->
+<script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+{{--
+<script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
+--}}
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+        },
+    });
+    $(document).ajaxError(function(event, jqXHR){
+        // if use is not logged in redirect.
+        if (jqXHR.status === 403) {
+            window.location = window.location.origin + '/admin/login';
+        }
+    });
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+
+    $('.quick-menu-icon').on("click",function(event) {
+        if ($(this).next().hasClass("show")) {
+            $(this).next().removeClass("show");
+        } else {
+            var quick_menu_popovers = document.getElementsByClassName('quick-menu-popover');
+            var i;
+            for (i = 0; i < quick_menu_popovers.length; i++) {
+                var popover = quick_menu_popovers[i];
+                if (popover.classList.contains('show')) {
+                    popover.classList.remove('show');
+                }
+            }
+            $(this).next().addClass("show");
+        }
+    });
+
+    window.onclick = function(event) {
+        // hide all popovers
+        var element = event.target;
+        //console.log(element.matches('.quick-menu-popover'));
+        if (!element.matches('.quick-menu-popover') && !element.matches('.quick-menu-icon') ) {
+            var quick_menu_popovers = document.getElementsByClassName('quick-menu-popover');
+            var i;
+            for (i = 0; i < quick_menu_popovers.length; i++) {
+                var popover = quick_menu_popovers[i];
+                if (popover.classList.contains('show')) {
+                    popover.classList.remove('show');
+                }
+            }
+        }
+
+    }
+
+</script>
+@yield('footer-script')
+</body>
 </html>

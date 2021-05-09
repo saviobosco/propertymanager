@@ -13,13 +13,24 @@ use GriffonTech\Unit\Contracts\Unit as UnitContract;
 class Unit extends Model implements UnitContract
 {
 
-    protected $fillable = ['property_id', 'identifier',
-        'lease_starts', 'lease_ends', 'is_occupied', 'property_unit_type_id'];
-
-    protected $casts = [
-        'lease_starts' => 'date',
-        'lease_ends' => 'date'
+    protected $fillable = [
+        'property_id',
+        'identifier',
+        'market_rent',
+        'size',
+        'address_line1',
+        'address_line2',
+        'address_line3',
+        'city',
+        'state',
+        'country',
+        'zip_code',
+        'room',
+        'bath_room',
+        'description',
+        'features',
     ];
+
 
     public function property()
     {

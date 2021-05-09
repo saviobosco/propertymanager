@@ -1,60 +1,89 @@
 @extends('user::layouts.master')
 
+@section('page_title') Properties @stop
+
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-inverse">
-                <div class="panel-heading">
-                    <h4 class="panel-title"> Properties</h4>
-                    <a class="btn btn-primary btn-sm" href="{{ route('user.properties.create') }}"> New Property</a>
-                </div>
-                <div class="panel-body">
-                    <table class="table table-responsive">
-                        <thead>
-                        <tr>
-                            <td>
-                                #
-                            </td>
-                            <td> Property Name </td>
-                            <td> Address </td>
-                            <td> City </td>
-                            <td> State</td>
-                            <td> Country</td>
-                            <td> No of Unit(s)</td>
-                            <td> Created</td>
-                            <td> last Updated</td>
-                            <td> Actions</td>
-                        </tr>
-                        </thead>
-                        <tbody>
 
-                        @foreach($properties as $property)
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"> Properties</h3>
+                        <div class="float-right">
+                            <a class="btn btn-success btn-sm" href="{{ route('user.properties.create') }}">Add Property</a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <table id="property-table" class="table table-bordered">
+                            <thead>
                             <tr>
-                                <td> {{ $property->id }} </td>
-                                <td> {{ $property->name }} </td>
-                                <td> {{ $property->address }} </td>
-                                <td> {{ $property->city }} </td>
-                                <td> {{ $property->state }} </td>
-                                <td> {{ $property->country }} </td>
-                                <td> {{ ($property->units) ? number_format($property->units->count()) : 0 }} </td>
-                                <td> {{ $property->created_at }} </td>
-                                <td> {{ $property->updated_at }} </td>
-                                <td class="with-btn" nowrap>
-                                    <a class="btn btn-info btn-sm m-r-2" href="{{ route('user.property_unit_types.index', $property->id) }}">unit types </a>
-                                    <a class="btn btn-info btn-sm width-60 m-r-2" href="{{ route('user.properties.show', $property->id) }}">view</a>
-                                    <a class="btn btn-primary btn-sm" href="{{ route('user.properties.edit', $property->id) }}"> edit </a>
-                                    <a class="btn btn-danger btn-sm" href="javascript:;"
-                                       data-id="{{ $property->id }}"
-                                       data-link="{{ route('user.properties.delete', $property->id) }}"
-                                       data-click="delete"> delete </a>
-                                </td>
+                                <td> Property </td>
+                                <td> Location </td>
+                                <td> Rental Owner </td>
+                                <td> Manager </td>
+                                <td colspan="2"> Type </td>
                             </tr>
-                        @endforeach
-                        </tbody>
+                            </thead>
+                            <tbody>
 
-                    </table>
+                            @foreach($properties as $property)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('user.properties.show', $property->id) }}">
+                                            {{ $property->address }}
+                                        </a>
+                                    </td>
+                                    <td> {{ $property->city }}, {{ $property->state_name }} - {{ $property->country_name }} </td>
+                                    <td>
+                                        @if($property->rental_owners->isNotEmpty())
+                                            @foreach($property->rental_owners as $rental_owner)
+                                                {{ ($rental_owner->owner->company_name) ? $rental_owner->owner->company_name : $rental_owner->owner->first_name.' '.$rental_owner->owner->last_name  }},
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td></td>
+                                    <td class="no-right-border">
+                                        {{ $property->property_type_detail }}
+                                    </td>
+                                    <td class="with-btn no-left-border" nowrap>
+                                        <div class="quick-menu">
+                                            <div class="quick-menu-icon"></div>
+                                            <div class="quick-menu-popover">
+                                                <ul class="quick-menu-list">
+                                                    <li class="quick-menu-item">
+                                                        <a class="quick-menu-link" href="">Financials</a>
+                                                    </li>
+                                                    <li class="quick-menu-item">
+                                                        <a class="quick-menu-link" href="{{ route('manager.properties.units.index', ['property' => $property->id]) }}">Units</a>
+                                                    </li>
+                                                    <li class="quick-menu-item">
+                                                        <a class="quick-menu-link" href="{{ route('user.property_owners.index', ['property_id' => $property->id]) }}">Rental owners</a>
+                                                    </li>
+                                                    <li class="quick-menu-item">
+                                                        <a class="quick-menu-link" href="">Event history</a>
+                                                    </li>
+                                                    <li class="quick-menu-item">
+                                                        <a class="quick-menu-link" href="{{ route('user.properties.show', $property->id) }}">Property Summary</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
         </div>
-    </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
 @endsection

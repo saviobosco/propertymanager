@@ -175,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \PragmaRX\CountriesLaravel\Package\ServiceProvider::class,
         \GriffonTech\Property\Providers\PropertyServiceProvider::class,
         \GriffonTech\User\Providers\UserServiceProvider::class,
         \GriffonTech\Core\Providers\CoreServiceProvider::class

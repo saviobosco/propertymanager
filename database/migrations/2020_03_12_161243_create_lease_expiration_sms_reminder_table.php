@@ -13,7 +13,7 @@ class CreateLeaseExpirationSmsReminderTable extends Migration
      */
     public function up()
     {
-        Schema::create('lease_expiration_sms_reminder', function (Blueprint $table) {
+        /*Schema::create('lease_expiration_sms_reminder', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('property_id');
@@ -22,7 +22,7 @@ class CreateLeaseExpirationSmsReminderTable extends Migration
             $table->text('message');
             $table->date('lease_ends');
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateLeaseExpirationSmsReminderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lease_expiration_sms_reminder');
+        //Schema::dropIfExists('lease_expiration_sms_reminder');
     }
 }

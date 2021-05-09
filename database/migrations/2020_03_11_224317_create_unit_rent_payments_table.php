@@ -13,7 +13,7 @@ class CreateUnitRentPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('unit_rent_payments', function (Blueprint $table) {
+        /*Schema::create('unit_rent_payments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('property_id');
@@ -22,7 +22,7 @@ class CreateUnitRentPaymentsTable extends Migration
             $table->date('lease_ends');
             $table->string('note', 2000)->nullable();
             $table->timestamps();
-        });
+        });*/
     }
 
     /**

@@ -13,13 +13,13 @@ class CreatePropertyUnitTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_unit_types', function (Blueprint $table) {
+        /*Schema::create('property_unit_types', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('property_id');
             $table->unsignedInteger('unit_type_id');
             $table->decimal('amount', 20, 2)->default(0)->nullable();
             $table->timestamps();
-        });
+        });*/
     }
 
     /**
@@ -29,6 +29,6 @@ class CreatePropertyUnitTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_unit_types');
+        //Schema::dropIfExists('property_unit_types');
     }
 }
