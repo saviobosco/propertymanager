@@ -62,7 +62,12 @@
                                         <span>Tenant</span>
                                     </td>
                                     <td class="border-left-0"></td>
-                                    <td></td>
+                                    <td>
+                                        <?php $lease_tenant = $tenant->leases()->first();  ?>
+                                        @if ($lease_tenant)
+                                                {{ $lease_tenant->lease->property->address }} - {{ $lease_tenant->lease->unit->identifier }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="form-element form-element--icon icon-tel icon-tel--home"> {{ $tenant->home_phone_number }} </div>
                                         <div class="form-element form-element--icon icon-tel icon-tel--work"> {{ $tenant->work_phone_number }}</div>

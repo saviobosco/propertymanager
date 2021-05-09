@@ -34,10 +34,11 @@ class Tenant extends Model implements TenantContract
         'company_id'
     ];
 
-    public function lease()
+    public function leases()
     {
-        return $this->belongsTo(LeaseTenantProxy::modelClass(), 'tenant_id', 'id');
+        return $this->hasMany(LeaseTenantProxy::modelClass(), 'tenant_id', 'id');
     }
+
 
     public function getFullNameAttribute()
     {
