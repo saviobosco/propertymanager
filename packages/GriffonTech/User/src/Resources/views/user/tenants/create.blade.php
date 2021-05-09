@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="alternate_email_address">Alternate email address</label>
-                                    {!! Form::text('primary_email_address', null, ['class' => 'form-control']) !!}
+                                    {!! Form::text('alternate_email_address', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                         </div>
