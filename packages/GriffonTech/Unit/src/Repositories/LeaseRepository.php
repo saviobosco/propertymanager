@@ -14,4 +14,9 @@ class LeaseRepository extends Repository
     {
         return Lease::class;
     }
+
+    public function getStatusTypes()
+    {
+        return \GriffonTech\Unit\Models\Lease::$statuses;
+    }
 }

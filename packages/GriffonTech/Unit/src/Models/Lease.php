@@ -9,8 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lease extends Model implements LeaseContract
 {
+    public static $statuses = [
+        '1' => 'Active',
+        '0' => 'Draft',
+        '2' => 'Closed'
+    ];
 
     protected $table = 'leases';
+
 
     protected $fillable = [
         'unit_id',
@@ -21,7 +27,8 @@ class Lease extends Model implements LeaseContract
         'rent_cycle',
         'signature_status',
         'security_deposit_amount',
-        'security_deposit_due_date'
+        'security_deposit_due_date',
+        'status'
     ];
 
     public function property()
